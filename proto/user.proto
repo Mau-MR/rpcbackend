@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+message User{
+    string name = 1;
+    string bussines =2;
+    bytes permission =3;
+    string db = 5;
+}

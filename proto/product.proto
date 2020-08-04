@@ -1,0 +1,42 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+message Product {
+  string id = 1;
+  string name =2;
+  string code =3;
+  //collection id
+  string collection = 4;
+  string brand = 5;
+  string sell_price = 6;
+}
+message InventoryOffice {
+  uint32 qty =1;
+  //for the office id
+  string office = 2;
+}
+message ProductInventory {
+  uint32 existance =1;
+  uint32 warehouse = 2;
+  repeated InventoryOffice office = 3;
+}
+message CreateProductReq{
+  string name =1;
+  string code = 2;
+  string brand = 3;
+  int32 buy_price = 4;
+  int32 sell_price = 5;
+  //collection id
+  string collection = 6;
+}
+message ProductRes{
+  bool success = 1;
+  string id = 2;
+  google.protobuf.Timestamp created_at=3;
+}
+service ProductService {
+  rpc CreateProduct(CreateProductReq) returns (ProductRes);
+}

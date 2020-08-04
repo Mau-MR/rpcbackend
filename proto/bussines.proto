@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+import "branch_office.proto";
+import "service.proto";
+import "product.proto";
+import "employee.proto";
+
+message Bussines {
+  string id =1;
+  string name = 2;
+  repeated string categories = 3;
+  repeated BranchOffice offices = 4;
+  repeated Service services = 5;
+  repeated Product products = 6;
+  repeated Product warehouse =7;
+  repeated Employee employees =8;
+}
+
+message CreateBusssinesReq {
+  string name = 1;
+  repeated string categories =2;
+}
+message BussinesRes{
+  bool succes = 1;
+  string id = 2;
+  oneof status{
+    google.protobuf.Timestamp created_at=3;
+  }
+}
+service BussinesService{
+  rpc CreateBussines(CreateBusssinesReq) returns (BussinesRes);
+}

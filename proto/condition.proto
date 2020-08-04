@@ -1,0 +1,12 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+//import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+
+message Condition {
+  repeated string elements = 1;
+  string is_equal_to = 2;
+}
+//TODO MAKE A RELATED SERVICE

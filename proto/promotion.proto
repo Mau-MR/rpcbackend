@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+//import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+import "condition.proto";
+import "service.proto";
+import "product.proto";
+
+message Promotion {
+  string description = 1;
+  int32 porcentage =2;
+  string valid_on = 3;
+  repeated Condition conditions = 4;
+  oneof type {
+    //TODO:watch for the repeated tag
+     Product products = 5;
+     Service services =6;
+  }
+}
+//TODO: Make related services

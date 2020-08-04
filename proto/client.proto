@@ -1,0 +1,58 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+import "ticket.proto";
+import "appointment.proto";
+import "promotion.proto";
+
+message Client {
+  string id = 1;
+  string name = 2;
+  string surname =3;
+  string phone =4;
+  string mail = 5;
+  string country = 6;
+  google.protobuf.Timestamp birthday = 7;
+  string image = 8;
+  repeated BManifesto manifesto = 9;
+  bool app = 10;
+  int32 experience = 11;
+}
+message BManifesto {
+  string id = 1;
+  string bid = 2;
+  string name =3;
+  repeated Ticket tickets =4;
+  repeated Appointment appointments=5;
+  repeated Promotion promotions = 6;
+  int32 points =7;
+}
+message CreateClientReq{
+  string name =1;
+  string surname = 2;
+  string phone=3;
+  string mail=4;
+  google.protobuf.Timestamp birthday = 5;
+}
+message UpdateClientReq{
+  string name = 1;
+  string surname =2;
+  string phone =3;
+  string mail = 4;
+  string image = 5;
+}
+message ClientRes{
+  bool success = 1;
+  string id = 2;
+  oneof status {
+    google.protobuf.Timestamp created_at=3;
+    google.protobuf.Timestamp updated_at=4;
+  }
+}
+service ClientService {
+  rpc UpdateClient(UpdateClientReq) returns (ClientRes);
+  rpc CreateClient(CreateClientReq) returns (ClientRes);
+}

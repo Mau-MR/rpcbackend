@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+import "employee.proto";
+import "service.proto";
+import "product.proto";
+
+message Ticket {
+  string id =1;
+  string branch_office = 2;
+  google.protobuf.Timestamp created_at=3;
+  repeated Employee employees = 4;
+  repeated Service services = 5;
+  repeated Product products = 6;
+  int32 discount = 7;
+  int32 total =8;
+
+
+}
+message TicketRes{
+  bool success = 1;
+  string id = 2;
+  google.protobuf.Timestamp created_at=3;
+}
+//TODO: make service related

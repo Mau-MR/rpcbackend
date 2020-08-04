@@ -1,0 +1,40 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+import "employee.proto";
+import "branch_office.proto";
+import "service.proto";
+
+//change service to services because of conflicts with the reserved word
+message Appointment{
+  string id = 1;
+  string date = 2;
+  repeated Employee employee = 3;
+  repeated Service services = 4;
+  string place = 5;
+  BranchOffice office = 6;
+}
+message CreateAppointmentReq{
+  string date = 1;
+  repeated Employee employee = 2;
+  repeated Service services =3;
+  string place =4;
+  string client =5;
+}
+message AppointmentRes{
+  bool sucess = 1;
+  string id = 2;
+  google.protobuf.Timestamp created_at=3;
+}
+
+message GetAppointmentReq {
+  string date = 1;
+  BranchOffice office = 2;
+}
+service AppointmenService{
+  rpc GetAppointment(GetAppointmentReq) returns (Appointment);
+  rpc CreateAppointment(CreateAppointmentReq) returns (AppointmentRes);
+}

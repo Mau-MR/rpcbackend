@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+message BranchOffice {
+  string name = 1;
+  string country = 2;
+  string state = 3;
+  uint32  cp = 4;
+  string phone = 5;
+  //TODO: check if its viable to use products agenda services and employees
+}
+
+message BranchOfficeRes{
+  bool succes = 1;
+  google.protobuf.Timestamp created_at=3;
+}
+service BranchOfficeService {
+  rpc CreateBranchOffice(BranchOffice) returns (BranchOfficeRes);
+
+}

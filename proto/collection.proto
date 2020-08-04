@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+//third party libraries
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/Mau-MR/rpcbackend/pb";
+
+message Collection{
+  string id =1;
+  string name =2;
+  //ralated to the qty of different products
+  int32 qty = 3;
+}
+message CreateCollectionReq{
+  string name = 1;
+  oneof type {
+    bool product =2;
+    bool services = 3;
+  }
+  oneof hierarchy {
+    bool master = 4;
+    string parentId =5;
+  }
+}
+
+message CollectionRes{
+  bool success = 1;
+  string id = 2;
+  oneof status {
+    google.protobuf.Timestamp created_at=3;
+  }
+}
+
+service CollectionService{
+  rpc CreateCollection(CreateCollectionReq) returns (CollectionRes);
+
+}
