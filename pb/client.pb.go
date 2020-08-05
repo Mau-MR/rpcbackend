@@ -421,6 +421,7 @@ type ClientRes struct {
 	//	*ClientRes_CreatedAt
 	//	*ClientRes_UpdatedAt
 	Status isClientRes_Status `protobuf_oneof:"status"`
+	Data   *Client            `protobuf:"bytes,5,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *ClientRes) Reset() {
@@ -490,6 +491,13 @@ func (x *ClientRes) GetUpdatedAt() *timestamp.Timestamp {
 	return nil
 }
 
+func (x *ClientRes) GetData() *Client {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
 type isClientRes_Status interface {
 	isClientRes_Status()
 }
@@ -505,6 +513,100 @@ type ClientRes_UpdatedAt struct {
 func (*ClientRes_CreatedAt) isClientRes_Status() {}
 
 func (*ClientRes_UpdatedAt) isClientRes_Status() {}
+
+type SearchClientReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Qty int32 `protobuf:"varint,1,opt,name=qty,proto3" json:"qty,omitempty"`
+}
+
+func (x *SearchClientReq) Reset() {
+	*x = SearchClientReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SearchClientReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchClientReq) ProtoMessage() {}
+
+func (x *SearchClientReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchClientReq.ProtoReflect.Descriptor instead.
+func (*SearchClientReq) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *SearchClientReq) GetQty() int32 {
+	if x != nil {
+		return x.Qty
+	}
+	return 0
+}
+
+type SearchClientRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Client *Client `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"`
+}
+
+func (x *SearchClientRes) Reset() {
+	*x = SearchClientRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SearchClientRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchClientRes) ProtoMessage() {}
+
+func (x *SearchClientRes) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchClientRes.ProtoReflect.Descriptor instead.
+func (*SearchClientRes) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *SearchClientRes) GetClient() *Client {
+	if x != nil {
+		return x.Client
+	}
+	return nil
+}
 
 var File_client_proto protoreflect.FileDescriptor
 
@@ -567,7 +669,7 @@ var file_client_proto_rawDesc = []byte{
 	0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f,
 	0x6e, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x04, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x14, 0x0a, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x22, 0xb9, 0x01, 0x0a,
+	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x22, 0xd9, 0x01, 0x0a,
 	0x09, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75,
 	0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63,
 	0x63, 0x65, 0x73, 0x73, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
@@ -578,18 +680,30 @@ var file_client_proto_rawDesc = []byte{
 	0x74, 0x12, 0x3b, 0x0a, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18,
 	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x48, 0x00, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x42, 0x08,
-	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x32, 0x77, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x32, 0x0a, 0x0c, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x55,
-	0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x0d,
-	0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x12, 0x32, 0x0a,
-	0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e,
-	0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52,
-	0x65, 0x71, 0x1a, 0x0d, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65,
-	0x73, 0x42, 0x21, 0x5a, 0x1f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x4d, 0x61, 0x75, 0x2d, 0x4d, 0x52, 0x2f, 0x72, 0x70, 0x63, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e,
-	0x64, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x48, 0x00, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x1e,
+	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x70,
+	0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x08,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x23, 0x0a, 0x0f, 0x53, 0x65, 0x61, 0x72,
+	0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x10, 0x0a, 0x03, 0x71,
+	0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x71, 0x74, 0x79, 0x22, 0x35, 0x0a,
+	0x0f, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73,
+	0x12, 0x22, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x32, 0xb9, 0x01, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x34, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x0d, 0x2e, 0x70, 0x62,
+	0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x12, 0x34, 0x0a, 0x0c,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70,
+	0x62, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65,
+	0x71, 0x1a, 0x0d, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73,
+	0x22, 0x00, 0x12, 0x3c, 0x0a, 0x0c, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65,
+	0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61,
+	0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x30, 0x01,
+	0x42, 0x21, 0x5a, 0x1f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4d,
+	0x61, 0x75, 0x2d, 0x4d, 0x52, 0x2f, 0x72, 0x70, 0x63, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64,
+	0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -604,36 +718,42 @@ func file_client_proto_rawDescGZIP() []byte {
 	return file_client_proto_rawDescData
 }
 
-var file_client_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_client_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_client_proto_goTypes = []interface{}{
 	(*Client)(nil),              // 0: pb.Client
 	(*BManifesto)(nil),          // 1: pb.BManifesto
 	(*CreateClientReq)(nil),     // 2: pb.CreateClientReq
 	(*UpdateClientReq)(nil),     // 3: pb.UpdateClientReq
 	(*ClientRes)(nil),           // 4: pb.ClientRes
-	(*timestamp.Timestamp)(nil), // 5: google.protobuf.Timestamp
-	(*Ticket)(nil),              // 6: pb.Ticket
-	(*Appointment)(nil),         // 7: pb.Appointment
-	(*Promotion)(nil),           // 8: pb.Promotion
+	(*SearchClientReq)(nil),     // 5: pb.SearchClientReq
+	(*SearchClientRes)(nil),     // 6: pb.SearchClientRes
+	(*timestamp.Timestamp)(nil), // 7: google.protobuf.Timestamp
+	(*Ticket)(nil),              // 8: pb.Ticket
+	(*Appointment)(nil),         // 9: pb.Appointment
+	(*Promotion)(nil),           // 10: pb.Promotion
 }
 var file_client_proto_depIdxs = []int32{
-	5,  // 0: pb.Client.birthday:type_name -> google.protobuf.Timestamp
+	7,  // 0: pb.Client.birthday:type_name -> google.protobuf.Timestamp
 	1,  // 1: pb.Client.manifesto:type_name -> pb.BManifesto
-	6,  // 2: pb.BManifesto.tickets:type_name -> pb.Ticket
-	7,  // 3: pb.BManifesto.appointments:type_name -> pb.Appointment
-	8,  // 4: pb.BManifesto.promotions:type_name -> pb.Promotion
-	5,  // 5: pb.CreateClientReq.birthday:type_name -> google.protobuf.Timestamp
-	5,  // 6: pb.ClientRes.created_at:type_name -> google.protobuf.Timestamp
-	5,  // 7: pb.ClientRes.updated_at:type_name -> google.protobuf.Timestamp
-	3,  // 8: pb.ClientService.UpdateClient:input_type -> pb.UpdateClientReq
-	2,  // 9: pb.ClientService.CreateClient:input_type -> pb.CreateClientReq
-	4,  // 10: pb.ClientService.UpdateClient:output_type -> pb.ClientRes
-	4,  // 11: pb.ClientService.CreateClient:output_type -> pb.ClientRes
-	10, // [10:12] is the sub-list for method output_type
-	8,  // [8:10] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	8,  // 2: pb.BManifesto.tickets:type_name -> pb.Ticket
+	9,  // 3: pb.BManifesto.appointments:type_name -> pb.Appointment
+	10, // 4: pb.BManifesto.promotions:type_name -> pb.Promotion
+	7,  // 5: pb.CreateClientReq.birthday:type_name -> google.protobuf.Timestamp
+	7,  // 6: pb.ClientRes.created_at:type_name -> google.protobuf.Timestamp
+	7,  // 7: pb.ClientRes.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 8: pb.ClientRes.data:type_name -> pb.Client
+	0,  // 9: pb.SearchClientRes.client:type_name -> pb.Client
+	3,  // 10: pb.ClientService.UpdateClient:input_type -> pb.UpdateClientReq
+	2,  // 11: pb.ClientService.CreateClient:input_type -> pb.CreateClientReq
+	5,  // 12: pb.ClientService.SearchClient:input_type -> pb.SearchClientReq
+	4,  // 13: pb.ClientService.UpdateClient:output_type -> pb.ClientRes
+	4,  // 14: pb.ClientService.CreateClient:output_type -> pb.ClientRes
+	6,  // 15: pb.ClientService.SearchClient:output_type -> pb.SearchClientRes
+	13, // [13:16] is the sub-list for method output_type
+	10, // [10:13] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_client_proto_init() }
@@ -705,6 +825,30 @@ func file_client_proto_init() {
 				return nil
 			}
 		}
+		file_client_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SearchClientReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SearchClientRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	file_client_proto_msgTypes[4].OneofWrappers = []interface{}{
 		(*ClientRes_CreatedAt)(nil),
@@ -716,7 +860,7 @@ func file_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -744,6 +888,7 @@ const _ = grpc.SupportPackageIsVersion6
 type ClientServiceClient interface {
 	UpdateClient(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*ClientRes, error)
 	CreateClient(ctx context.Context, in *CreateClientReq, opts ...grpc.CallOption) (*ClientRes, error)
+	SearchClient(ctx context.Context, in *SearchClientReq, opts ...grpc.CallOption) (ClientService_SearchClientClient, error)
 }
 
 type clientServiceClient struct {
@@ -772,10 +917,43 @@ func (c *clientServiceClient) CreateClient(ctx context.Context, in *CreateClient
 	return out, nil
 }
 
+func (c *clientServiceClient) SearchClient(ctx context.Context, in *SearchClientReq, opts ...grpc.CallOption) (ClientService_SearchClientClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ClientService_serviceDesc.Streams[0], "/pb.ClientService/SearchClient", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &clientServiceSearchClientClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ClientService_SearchClientClient interface {
+	Recv() (*SearchClientRes, error)
+	grpc.ClientStream
+}
+
+type clientServiceSearchClientClient struct {
+	grpc.ClientStream
+}
+
+func (x *clientServiceSearchClientClient) Recv() (*SearchClientRes, error) {
+	m := new(SearchClientRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 type ClientServiceServer interface {
 	UpdateClient(context.Context, *UpdateClientReq) (*ClientRes, error)
 	CreateClient(context.Context, *CreateClientReq) (*ClientRes, error)
+	SearchClient(*SearchClientReq, ClientService_SearchClientServer) error
 }
 
 // UnimplementedClientServiceServer can be embedded to have forward compatible implementations.
@@ -787,6 +965,9 @@ func (*UnimplementedClientServiceServer) UpdateClient(context.Context, *UpdateCl
 }
 func (*UnimplementedClientServiceServer) CreateClient(context.Context, *CreateClientReq) (*ClientRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateClient not implemented")
+}
+func (*UnimplementedClientServiceServer) SearchClient(*SearchClientReq, ClientService_SearchClientServer) error {
+	return status.Errorf(codes.Unimplemented, "method SearchClient not implemented")
 }
 
 func RegisterClientServiceServer(s *grpc.Server, srv ClientServiceServer) {
@@ -829,6 +1010,27 @@ func _ClientService_CreateClient_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_SearchClient_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchClientReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ClientServiceServer).SearchClient(m, &clientServiceSearchClientServer{stream})
+}
+
+type ClientService_SearchClientServer interface {
+	Send(*SearchClientRes) error
+	grpc.ServerStream
+}
+
+type clientServiceSearchClientServer struct {
+	grpc.ServerStream
+}
+
+func (x *clientServiceSearchClientServer) Send(m *SearchClientRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 var _ClientService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.ClientService",
 	HandlerType: (*ClientServiceServer)(nil),
@@ -842,6 +1044,12 @@ var _ClientService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _ClientService_CreateClient_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SearchClient",
+			Handler:       _ClientService_SearchClient_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "client.proto",
 }

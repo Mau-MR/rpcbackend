@@ -35,6 +35,6 @@ message GetAppointmentReq {
   BranchOffice office = 2;
 }
 service AppointmenService{
-  rpc GetAppointment(GetAppointmentReq) returns (Appointment);
-  rpc CreateAppointment(CreateAppointmentReq) returns (AppointmentRes);
+  rpc GetAppointment(GetAppointmentReq) returns (Appointment){};
+  rpc CreateAppointment(CreateAppointmentReq) returns (AppointmentRes){};
 }

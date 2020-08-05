@@ -18,6 +18,6 @@ message BranchOfficeRes{
   google.protobuf.Timestamp created_at=3;
 }
 service BranchOfficeService {
-  rpc CreateBranchOffice(BranchOffice) returns (BranchOfficeRes);
+  rpc CreateBranchOffice(BranchOffice) returns (BranchOfficeRes){};
 
 }

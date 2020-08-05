@@ -51,8 +51,16 @@ message ClientRes{
     google.protobuf.Timestamp created_at=3;
     google.protobuf.Timestamp updated_at=4;
   }
+  Client data = 5;
+}
+message SearchClientReq{
+  int32 qty = 1;
+}
+message SearchClientRes{
+  Client client = 1;
 }
 service ClientService {
-  rpc UpdateClient(UpdateClientReq) returns (ClientRes);
-  rpc CreateClient(CreateClientReq) returns (ClientRes);
+  rpc UpdateClient(UpdateClientReq) returns (ClientRes){};
+  rpc CreateClient(CreateClientReq) returns (ClientRes){};
+  rpc SearchClient(SearchClientReq) returns (stream SearchClientRes){};
 }

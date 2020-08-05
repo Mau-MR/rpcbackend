@@ -32,5 +32,5 @@ message BussinesRes{
   }
 }
 service BussinesService{
-  rpc CreateBussines(CreateBusssinesReq) returns (BussinesRes);
+  rpc CreateBussines(CreateBusssinesReq) returns (BussinesRes){};
 }

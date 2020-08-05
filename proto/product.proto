@@ -38,5 +38,5 @@ message ProductRes{
   google.protobuf.Timestamp created_at=3;
 }
 service ProductService {
-  rpc CreateProduct(CreateProductReq) returns (ProductRes);
+  rpc CreateProduct(CreateProductReq) returns (ProductRes){};
 }

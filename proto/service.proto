@@ -30,5 +30,5 @@ message ServiceRes{
 }
 
 service ServiceService {
-  rpc CreateService(CreateServiceReq) returns (ServiceRes);
+  rpc CreateService(CreateServiceReq) returns (ServiceRes){};
 }

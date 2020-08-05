@@ -26,5 +26,5 @@ message EmployeeRes  {
 }
 
 service EmployeeService{
-  rpc CreateEmployee(CreateEmployeeReq) returns (EmployeeRes);
+  rpc CreateEmployee(CreateEmployeeReq) returns (EmployeeRes){};
 }
