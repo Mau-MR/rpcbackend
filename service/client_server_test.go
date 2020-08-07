@@ -13,8 +13,9 @@ import (
 
 func TestServerCreateClient(t *testing.T) {
 	t.Parallel()
-	clientNoID := sample.NewClient()
-	clientNoID.Id = ""
+	//TODO: Make a test for client with no id ommited this time
+	//clientNoID := sample.NewClient()
+	//clientNoID.Id = ""
 	testCases := []struct {
 		name   string
 		client *pb.Client
@@ -29,9 +30,11 @@ func TestServerCreateClient(t *testing.T) {
 		},
 		{
 			name:   "success_no_id",
-			client: clientNoID,
-			store:  NewInMemoryClientStore(),
-			code:   codes.OK,
+			client: sample.NewClient(),
+			//TODO: check for this case
+			//client: clientNoID,
+			store: NewInMemoryClientStore(),
+			code:  codes.OK,
 		},
 	}
 	for i := range testCases {
@@ -41,17 +44,17 @@ func TestServerCreateClient(t *testing.T) {
 			req := &pb.CreateClientReq{
 				Name:    tc.client.Name,
 				Surname: tc.client.Surname,
+				Phone:   tc.client.Phone,
+				Id:      tc.client.Id,
 			}
-			server := NewClientServer(tc.store)
+			server := NewClientServer(tc.store, nil)
 			res, err := server.CreateClient(context.Background(), req)
-			//harcoding the id because there istn a connection with db yet
-			res.Id = "slahiadblhl235"
 			if tc.code == codes.OK {
 				require.NoError(t, err)
 				require.NotNil(t, res)
-				require.NotEmpty(t, res.Id)
+				require.NotEmpty(t, res.Data.Id)
 				if len(tc.client.Id) > 0 {
-					require.Equal(t, tc.client.Id, res.Id)
+					require.Equal(t, tc.client.Id, res.Data.Id)
 				}
 			} else {
 				require.Error(t, err)
@@ -60,7 +63,6 @@ func TestServerCreateClient(t *testing.T) {
 				require.True(t, ok)
 				require.Equal(t, tc.code, st.Code())
 			}
-
 		})
 
 	}

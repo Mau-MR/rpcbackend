@@ -31,6 +31,7 @@ message BManifesto {
   int32 points =7;
 }
 message CreateClientReq{
+  string id =6;
   string name =1;
   string surname = 2;
   string phone=3;
@@ -54,13 +55,36 @@ message ClientRes{
   Client data = 5;
 }
 message SearchClientReq{
-  int32 qty = 1;
+  ClientFilter filter = 1;
+}
+message ClientFilter {
+  string name = 1;
+  string surname = 2;
+  string birthday = 3;
+  //TODO:latter for bussines fiels
+  int32 points = 4;
+  string phone = 5;
 }
 message SearchClientRes{
   Client client = 1;
+}
+message UploadImageReq {
+  oneof data {
+    ImageInfo info = 1;
+    bytes chunk_data = 2;
+  }
+}
+message ImageInfo {
+  string client_id = 1;
+  string image_type = 2;
+}
+message UploadImageRes{
+  string id = 1;
+  uint32 size = 2;
 }
 service ClientService {
   rpc UpdateClient(UpdateClientReq) returns (ClientRes){};
   rpc CreateClient(CreateClientReq) returns (ClientRes){};
   rpc SearchClient(SearchClientReq) returns (stream SearchClientRes){};
+  rpc UploadImage(stream UploadImageReq) returns(UploadImageRes){};
 }

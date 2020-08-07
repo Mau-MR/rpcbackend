@@ -257,6 +257,7 @@ type CreateClientReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	Id       string               `protobuf:"bytes,6,opt,name=id,proto3" json:"id,omitempty"`
 	Name     string               `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Surname  string               `protobuf:"bytes,2,opt,name=surname,proto3" json:"surname,omitempty"`
 	Phone    string               `protobuf:"bytes,3,opt,name=phone,proto3" json:"phone,omitempty"`
@@ -294,6 +295,13 @@ func (x *CreateClientReq) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateClientReq.ProtoReflect.Descriptor instead.
 func (*CreateClientReq) Descriptor() ([]byte, []int) {
 	return file_client_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CreateClientReq) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
 }
 
 func (x *CreateClientReq) GetName() string {
@@ -519,7 +527,7 @@ type SearchClientReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Qty int32 `protobuf:"varint,1,opt,name=qty,proto3" json:"qty,omitempty"`
+	Filter *ClientFilter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
 }
 
 func (x *SearchClientReq) Reset() {
@@ -554,11 +562,91 @@ func (*SearchClientReq) Descriptor() ([]byte, []int) {
 	return file_client_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *SearchClientReq) GetQty() int32 {
+func (x *SearchClientReq) GetFilter() *ClientFilter {
 	if x != nil {
-		return x.Qty
+		return x.Filter
+	}
+	return nil
+}
+
+type ClientFilter struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name     string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Surname  string `protobuf:"bytes,2,opt,name=surname,proto3" json:"surname,omitempty"`
+	Birthday string `protobuf:"bytes,3,opt,name=birthday,proto3" json:"birthday,omitempty"`
+	//TODO:latter for bussines fiels
+	Points int32  `protobuf:"varint,4,opt,name=points,proto3" json:"points,omitempty"`
+	Phone  string `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+}
+
+func (x *ClientFilter) Reset() {
+	*x = ClientFilter{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ClientFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ClientFilter) ProtoMessage() {}
+
+func (x *ClientFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ClientFilter.ProtoReflect.Descriptor instead.
+func (*ClientFilter) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ClientFilter) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ClientFilter) GetSurname() string {
+	if x != nil {
+		return x.Surname
+	}
+	return ""
+}
+
+func (x *ClientFilter) GetBirthday() string {
+	if x != nil {
+		return x.Birthday
+	}
+	return ""
+}
+
+func (x *ClientFilter) GetPoints() int32 {
+	if x != nil {
+		return x.Points
 	}
 	return 0
+}
+
+func (x *ClientFilter) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
 }
 
 type SearchClientRes struct {
@@ -572,7 +660,7 @@ type SearchClientRes struct {
 func (x *SearchClientRes) Reset() {
 	*x = SearchClientRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_client_proto_msgTypes[6]
+		mi := &file_client_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -585,7 +673,7 @@ func (x *SearchClientRes) String() string {
 func (*SearchClientRes) ProtoMessage() {}
 
 func (x *SearchClientRes) ProtoReflect() protoreflect.Message {
-	mi := &file_client_proto_msgTypes[6]
+	mi := &file_client_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -598,7 +686,7 @@ func (x *SearchClientRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchClientRes.ProtoReflect.Descriptor instead.
 func (*SearchClientRes) Descriptor() ([]byte, []int) {
-	return file_client_proto_rawDescGZIP(), []int{6}
+	return file_client_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SearchClientRes) GetClient() *Client {
@@ -606,6 +694,196 @@ func (x *SearchClientRes) GetClient() *Client {
 		return x.Client
 	}
 	return nil
+}
+
+type UploadImageReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to Data:
+	//	*UploadImageReq_Info
+	//	*UploadImageReq_ChunkData
+	Data isUploadImageReq_Data `protobuf_oneof:"data"`
+}
+
+func (x *UploadImageReq) Reset() {
+	*x = UploadImageReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UploadImageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadImageReq) ProtoMessage() {}
+
+func (x *UploadImageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadImageReq.ProtoReflect.Descriptor instead.
+func (*UploadImageReq) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{8}
+}
+
+func (m *UploadImageReq) GetData() isUploadImageReq_Data {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+func (x *UploadImageReq) GetInfo() *ImageInfo {
+	if x, ok := x.GetData().(*UploadImageReq_Info); ok {
+		return x.Info
+	}
+	return nil
+}
+
+func (x *UploadImageReq) GetChunkData() []byte {
+	if x, ok := x.GetData().(*UploadImageReq_ChunkData); ok {
+		return x.ChunkData
+	}
+	return nil
+}
+
+type isUploadImageReq_Data interface {
+	isUploadImageReq_Data()
+}
+
+type UploadImageReq_Info struct {
+	Info *ImageInfo `protobuf:"bytes,1,opt,name=info,proto3,oneof"`
+}
+
+type UploadImageReq_ChunkData struct {
+	ChunkData []byte `protobuf:"bytes,2,opt,name=chunk_data,json=chunkData,proto3,oneof"`
+}
+
+func (*UploadImageReq_Info) isUploadImageReq_Data() {}
+
+func (*UploadImageReq_ChunkData) isUploadImageReq_Data() {}
+
+type ImageInfo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ClientId  string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+	ImageType string `protobuf:"bytes,2,opt,name=image_type,json=imageType,proto3" json:"image_type,omitempty"`
+}
+
+func (x *ImageInfo) Reset() {
+	*x = ImageInfo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ImageInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageInfo) ProtoMessage() {}
+
+func (x *ImageInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageInfo.ProtoReflect.Descriptor instead.
+func (*ImageInfo) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ImageInfo) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *ImageInfo) GetImageType() string {
+	if x != nil {
+		return x.ImageType
+	}
+	return ""
+}
+
+type UploadImageRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Size uint32 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+}
+
+func (x *UploadImageRes) Reset() {
+	*x = UploadImageRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UploadImageRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadImageRes) ProtoMessage() {}
+
+func (x *UploadImageRes) ProtoReflect() protoreflect.Message {
+	mi := &file_client_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadImageRes.ProtoReflect.Descriptor instead.
+func (*UploadImageRes) Descriptor() ([]byte, []int) {
+	return file_client_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UploadImageRes) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UploadImageRes) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
 }
 
 var File_client_proto protoreflect.FileDescriptor
@@ -651,8 +929,9 @@ var file_client_proto_rawDesc = []byte{
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x70, 0x62, 0x2e, 0x50, 0x72, 0x6f, 0x6d, 0x6f, 0x74,
 	0x69, 0x6f, 0x6e, 0x52, 0x0a, 0x70, 0x72, 0x6f, 0x6d, 0x6f, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12,
 	0x16, 0x0a, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x22, 0xa1, 0x01, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x6e,
+	0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x22, 0xb1, 0x01, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e,
 	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12,
 	0x18, 0x0a, 0x07, 0x73, 0x75, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x07, 0x73, 0x75, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x68, 0x6f,
@@ -683,13 +962,37 @@ var file_client_proto_rawDesc = []byte{
 	0x70, 0x48, 0x00, 0x52, 0x09, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x41, 0x74, 0x12, 0x1e,
 	0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x70,
 	0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x42, 0x08,
-	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x23, 0x0a, 0x0f, 0x53, 0x65, 0x61, 0x72,
-	0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x10, 0x0a, 0x03, 0x71,
-	0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x71, 0x74, 0x79, 0x22, 0x35, 0x0a,
-	0x0f, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73,
-	0x12, 0x22, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c,
-	0x69, 0x65, 0x6e, 0x74, 0x32, 0xb9, 0x01, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x3b, 0x0a, 0x0f, 0x53, 0x65, 0x61, 0x72,
+	0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x28, 0x0a, 0x06, 0x66,
+	0x69, 0x6c, 0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x70, 0x62,
+	0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x52, 0x06, 0x66,
+	0x69, 0x6c, 0x74, 0x65, 0x72, 0x22, 0x86, 0x01, 0x0a, 0x0c, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75,
+	0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x75, 0x72,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x62, 0x69, 0x72, 0x74, 0x68, 0x64, 0x61, 0x79,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x62, 0x69, 0x72, 0x74, 0x68, 0x64, 0x61, 0x79,
+	0x12, 0x16, 0x0a, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x06, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x68, 0x6f, 0x6e,
+	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x70, 0x68, 0x6f, 0x6e, 0x65, 0x22, 0x35,
+	0x0a, 0x0f, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65,
+	0x73, 0x12, 0x22, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63,
+	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22, 0x5e, 0x0a, 0x0e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x49,
+	0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x12, 0x23, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x70, 0x62, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65,
+	0x49, 0x6e, 0x66, 0x6f, 0x48, 0x00, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x12, 0x1f, 0x0a, 0x0a,
+	0x63, 0x68, 0x75, 0x6e, 0x6b, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c,
+	0x48, 0x00, 0x52, 0x09, 0x63, 0x68, 0x75, 0x6e, 0x6b, 0x44, 0x61, 0x74, 0x61, 0x42, 0x06, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x47, 0x0a, 0x09, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x49, 0x6e,
+	0x66, 0x6f, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12,
+	0x1d, 0x0a, 0x0a, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x54, 0x79, 0x70, 0x65, 0x22, 0x34,
+	0x0a, 0x0e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x12, 0x0a, 0x04, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04,
+	0x73, 0x69, 0x7a, 0x65, 0x32, 0xf4, 0x01, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53,
 	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x34, 0x0a, 0x0c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
 	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x64, 0x61,
 	0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x0d, 0x2e, 0x70, 0x62,
@@ -701,9 +1004,13 @@ var file_client_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x43, 0x6c,
 	0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x1a, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x65, 0x61,
 	0x72, 0x63, 0x68, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x22, 0x00, 0x30, 0x01,
-	0x42, 0x21, 0x5a, 0x1f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4d,
-	0x61, 0x75, 0x2d, 0x4d, 0x52, 0x2f, 0x72, 0x70, 0x63, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64,
-	0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x39, 0x0a, 0x0b, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x12,
+	0x12, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x49, 0x6d, 0x61, 0x67, 0x65,
+	0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x49,
+	0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x22, 0x00, 0x28, 0x01, 0x42, 0x21, 0x5a, 0x1f, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4d, 0x61, 0x75, 0x2d, 0x4d, 0x52,
+	0x2f, 0x72, 0x70, 0x63, 0x62, 0x61, 0x63, 0x6b, 0x65, 0x6e, 0x64, 0x2f, 0x70, 0x62, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -718,7 +1025,7 @@ func file_client_proto_rawDescGZIP() []byte {
 	return file_client_proto_rawDescData
 }
 
-var file_client_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_client_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_client_proto_goTypes = []interface{}{
 	(*Client)(nil),              // 0: pb.Client
 	(*BManifesto)(nil),          // 1: pb.BManifesto
@@ -726,34 +1033,42 @@ var file_client_proto_goTypes = []interface{}{
 	(*UpdateClientReq)(nil),     // 3: pb.UpdateClientReq
 	(*ClientRes)(nil),           // 4: pb.ClientRes
 	(*SearchClientReq)(nil),     // 5: pb.SearchClientReq
-	(*SearchClientRes)(nil),     // 6: pb.SearchClientRes
-	(*timestamp.Timestamp)(nil), // 7: google.protobuf.Timestamp
-	(*Ticket)(nil),              // 8: pb.Ticket
-	(*Appointment)(nil),         // 9: pb.Appointment
-	(*Promotion)(nil),           // 10: pb.Promotion
+	(*ClientFilter)(nil),        // 6: pb.ClientFilter
+	(*SearchClientRes)(nil),     // 7: pb.SearchClientRes
+	(*UploadImageReq)(nil),      // 8: pb.UploadImageReq
+	(*ImageInfo)(nil),           // 9: pb.ImageInfo
+	(*UploadImageRes)(nil),      // 10: pb.UploadImageRes
+	(*timestamp.Timestamp)(nil), // 11: google.protobuf.Timestamp
+	(*Ticket)(nil),              // 12: pb.Ticket
+	(*Appointment)(nil),         // 13: pb.Appointment
+	(*Promotion)(nil),           // 14: pb.Promotion
 }
 var file_client_proto_depIdxs = []int32{
-	7,  // 0: pb.Client.birthday:type_name -> google.protobuf.Timestamp
+	11, // 0: pb.Client.birthday:type_name -> google.protobuf.Timestamp
 	1,  // 1: pb.Client.manifesto:type_name -> pb.BManifesto
-	8,  // 2: pb.BManifesto.tickets:type_name -> pb.Ticket
-	9,  // 3: pb.BManifesto.appointments:type_name -> pb.Appointment
-	10, // 4: pb.BManifesto.promotions:type_name -> pb.Promotion
-	7,  // 5: pb.CreateClientReq.birthday:type_name -> google.protobuf.Timestamp
-	7,  // 6: pb.ClientRes.created_at:type_name -> google.protobuf.Timestamp
-	7,  // 7: pb.ClientRes.updated_at:type_name -> google.protobuf.Timestamp
+	12, // 2: pb.BManifesto.tickets:type_name -> pb.Ticket
+	13, // 3: pb.BManifesto.appointments:type_name -> pb.Appointment
+	14, // 4: pb.BManifesto.promotions:type_name -> pb.Promotion
+	11, // 5: pb.CreateClientReq.birthday:type_name -> google.protobuf.Timestamp
+	11, // 6: pb.ClientRes.created_at:type_name -> google.protobuf.Timestamp
+	11, // 7: pb.ClientRes.updated_at:type_name -> google.protobuf.Timestamp
 	0,  // 8: pb.ClientRes.data:type_name -> pb.Client
-	0,  // 9: pb.SearchClientRes.client:type_name -> pb.Client
-	3,  // 10: pb.ClientService.UpdateClient:input_type -> pb.UpdateClientReq
-	2,  // 11: pb.ClientService.CreateClient:input_type -> pb.CreateClientReq
-	5,  // 12: pb.ClientService.SearchClient:input_type -> pb.SearchClientReq
-	4,  // 13: pb.ClientService.UpdateClient:output_type -> pb.ClientRes
-	4,  // 14: pb.ClientService.CreateClient:output_type -> pb.ClientRes
-	6,  // 15: pb.ClientService.SearchClient:output_type -> pb.SearchClientRes
-	13, // [13:16] is the sub-list for method output_type
-	10, // [10:13] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	6,  // 9: pb.SearchClientReq.filter:type_name -> pb.ClientFilter
+	0,  // 10: pb.SearchClientRes.client:type_name -> pb.Client
+	9,  // 11: pb.UploadImageReq.info:type_name -> pb.ImageInfo
+	3,  // 12: pb.ClientService.UpdateClient:input_type -> pb.UpdateClientReq
+	2,  // 13: pb.ClientService.CreateClient:input_type -> pb.CreateClientReq
+	5,  // 14: pb.ClientService.SearchClient:input_type -> pb.SearchClientReq
+	8,  // 15: pb.ClientService.UploadImage:input_type -> pb.UploadImageReq
+	4,  // 16: pb.ClientService.UpdateClient:output_type -> pb.ClientRes
+	4,  // 17: pb.ClientService.CreateClient:output_type -> pb.ClientRes
+	7,  // 18: pb.ClientService.SearchClient:output_type -> pb.SearchClientRes
+	10, // 19: pb.ClientService.UploadImage:output_type -> pb.UploadImageRes
+	16, // [16:20] is the sub-list for method output_type
+	12, // [12:16] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_client_proto_init() }
@@ -838,7 +1153,55 @@ func file_client_proto_init() {
 			}
 		}
 		file_client_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ClientFilter); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SearchClientRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UploadImageReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ImageInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UploadImageRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -854,13 +1217,17 @@ func file_client_proto_init() {
 		(*ClientRes_CreatedAt)(nil),
 		(*ClientRes_UpdatedAt)(nil),
 	}
+	file_client_proto_msgTypes[8].OneofWrappers = []interface{}{
+		(*UploadImageReq_Info)(nil),
+		(*UploadImageReq_ChunkData)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -889,6 +1256,7 @@ type ClientServiceClient interface {
 	UpdateClient(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*ClientRes, error)
 	CreateClient(ctx context.Context, in *CreateClientReq, opts ...grpc.CallOption) (*ClientRes, error)
 	SearchClient(ctx context.Context, in *SearchClientReq, opts ...grpc.CallOption) (ClientService_SearchClientClient, error)
+	UploadImage(ctx context.Context, opts ...grpc.CallOption) (ClientService_UploadImageClient, error)
 }
 
 type clientServiceClient struct {
@@ -949,11 +1317,46 @@ func (x *clientServiceSearchClientClient) Recv() (*SearchClientRes, error) {
 	return m, nil
 }
 
+func (c *clientServiceClient) UploadImage(ctx context.Context, opts ...grpc.CallOption) (ClientService_UploadImageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_ClientService_serviceDesc.Streams[1], "/pb.ClientService/UploadImage", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &clientServiceUploadImageClient{stream}
+	return x, nil
+}
+
+type ClientService_UploadImageClient interface {
+	Send(*UploadImageReq) error
+	CloseAndRecv() (*UploadImageRes, error)
+	grpc.ClientStream
+}
+
+type clientServiceUploadImageClient struct {
+	grpc.ClientStream
+}
+
+func (x *clientServiceUploadImageClient) Send(m *UploadImageReq) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *clientServiceUploadImageClient) CloseAndRecv() (*UploadImageRes, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(UploadImageRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 type ClientServiceServer interface {
 	UpdateClient(context.Context, *UpdateClientReq) (*ClientRes, error)
 	CreateClient(context.Context, *CreateClientReq) (*ClientRes, error)
 	SearchClient(*SearchClientReq, ClientService_SearchClientServer) error
+	UploadImage(ClientService_UploadImageServer) error
 }
 
 // UnimplementedClientServiceServer can be embedded to have forward compatible implementations.
@@ -968,6 +1371,9 @@ func (*UnimplementedClientServiceServer) CreateClient(context.Context, *CreateCl
 }
 func (*UnimplementedClientServiceServer) SearchClient(*SearchClientReq, ClientService_SearchClientServer) error {
 	return status.Errorf(codes.Unimplemented, "method SearchClient not implemented")
+}
+func (*UnimplementedClientServiceServer) UploadImage(ClientService_UploadImageServer) error {
+	return status.Errorf(codes.Unimplemented, "method UploadImage not implemented")
 }
 
 func RegisterClientServiceServer(s *grpc.Server, srv ClientServiceServer) {
@@ -1031,6 +1437,32 @@ func (x *clientServiceSearchClientServer) Send(m *SearchClientRes) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _ClientService_UploadImage_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ClientServiceServer).UploadImage(&clientServiceUploadImageServer{stream})
+}
+
+type ClientService_UploadImageServer interface {
+	SendAndClose(*UploadImageRes) error
+	Recv() (*UploadImageReq, error)
+	grpc.ServerStream
+}
+
+type clientServiceUploadImageServer struct {
+	grpc.ServerStream
+}
+
+func (x *clientServiceUploadImageServer) SendAndClose(m *UploadImageRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *clientServiceUploadImageServer) Recv() (*UploadImageReq, error) {
+	m := new(UploadImageReq)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _ClientService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.ClientService",
 	HandlerType: (*ClientServiceServer)(nil),
@@ -1049,6 +1481,11 @@ var _ClientService_serviceDesc = grpc.ServiceDesc{
 			StreamName:    "SearchClient",
 			Handler:       _ClientService_SearchClient_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "UploadImage",
+			Handler:       _ClientService_UploadImage_Handler,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "client.proto",
