@@ -13,7 +13,6 @@ import (
 
 func testCreateClient(clientClient client.ClientClient) {
 	clientClient.CreateClient(sample.NewClient())
-
 }
 func testSearchClient(clientClient client.ClientClient) {
 	for i := 0; i < 10; i++ {
@@ -32,9 +31,13 @@ func testUploadImage(clientClient client.ClientClient) {
 	clientClient.CreateClient(client)
 	clientClient.UploadImage(client.GetId(), "tmp/client.jpg")
 }
+func testCreateAccount(authClient client.AuthClient) {
+	authClient.CreateAccount()
+
+}
 
 const (
-	username        = "admin"
+	username        = "Mawi"
 	password        = "secret"
 	refreshDuration = 30 * time.Second
 )
@@ -57,6 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot dial server: ", err)
 	}
+
 	authClient := client.NewAuthClient(cc1, username, password)
 	interceptor, err := client.NewAuthInterceptor(authClient, authMethods(), refreshDuration)
 	if err != nil {
@@ -73,6 +77,7 @@ func main() {
 	}
 	clientClient := client.NewClientClient(cc2)
 	testCreateClient(*clientClient)
+	testCreateAccount(*authClient)
 	//testUploadImage(clientClient)
 
 }

@@ -1,14 +1,14 @@
 {
- "id": "87b56711-622f-41d4-948c-41f03472ff55",
- "name": "Raul",
- "surname": "Alcantara",
- "phone": "7496303663",
+ "id": "5e0959f2-3013-4a3c-94c8-fa4b83120a60",
+ "name": "Maricio",
+ "surname": "Soriano",
+ "phone": "9867200827",
  "mail": "",
  "country": "",
  "birthday": null,
  "image": "",
  "manifesto": [
  ],
- "app": false,
+ "app": true,
  "experience": 0
 }

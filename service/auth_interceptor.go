@@ -44,6 +44,7 @@ func (interceptor *AuthInterceptor) Stream() grpc.StreamServerInterceptor {
 	}
 
 }
+
 func (interceptor *AuthInterceptor) authorize(ctx context.Context, method string) error {
 	accessibleRoles, ok := interceptor.accessibleRoles[method]
 	if !ok {
@@ -54,6 +55,7 @@ func (interceptor *AuthInterceptor) authorize(ctx context.Context, method string
 	if !ok {
 		return status.Errorf(codes.Unauthenticated, "matadata is not provided")
 	}
+	//TODO: Check how it looks the metadata
 	values := md["authorization"]
 	if len(values) == 0 {
 		return status.Errorf(codes.Unauthenticated, "authorization token is not provided")
@@ -68,6 +70,5 @@ func (interceptor *AuthInterceptor) authorize(ctx context.Context, method string
 			return nil
 		}
 	}
-	return status.Error(codes.PermissionDenied, "no permision to access this rpc")
-
+	return status.Error(codes.PermissionDenied, "insuficient credentials")
 }

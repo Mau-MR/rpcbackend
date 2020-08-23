@@ -35,3 +35,20 @@ func (client *AuthClient) Login() (string, error) {
 	return res.GetAccessToken(), nil
 
 }
+func (client *AuthClient) CreateAccount() (string, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	req := &pb.CreateAccountReq{
+		User:     "Mawi",
+		Name:     "Mauricio Eulalio Merida Rivera",
+		Phone:    "7773491106",
+		Bussines: "Thea",
+		Password: "Secreto",
+	}
+	res, err := client.service.CreateAccount(ctx, req)
+	if err != nil {
+		return "", err
+	}
+	return res.GetBid(), nil
+
+}

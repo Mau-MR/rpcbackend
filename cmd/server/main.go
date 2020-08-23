@@ -3,14 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/Mau-MR/rpcbackend/pb"
+	"github.com/Mau-MR/rpcbackend/service"
+	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"time"
-
-	"github.com/Mau-MR/rpcbackend/pb"
-	"github.com/Mau-MR/rpcbackend/service"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -42,21 +42,29 @@ func createUser(userStore service.UserStore, username, password, role string) er
 	return userStore.Save(user)
 }
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	dbClient := service.NewDataBase("localhost", 27017)
+
 	port := flag.Int("port", 0, "the server port")
 	flag.Parse()
 	log.Printf("start server on port %d", *port)
 
 	userStore := service.NewInMemoryUserStore()
-	err := seedUsers(userStore)
+	err = seedUsers(userStore)
 	if err != nil {
 		log.Fatal("cannot generete seed users")
 	}
+
 	jwtManager := service.NewJWTManager(secretKey, tokenDuration)
-	authServer := service.NewAuthServer(userStore, jwtManager)
+	authServer := service.NewAuthServer(userStore, dbClient, jwtManager)
 
 	clientStore := service.NewInMemoryClientStore()
 	imageStore := service.NewDiskImageStore("img")
-	clientServer := service.NewClientServer(clientStore, imageStore)
+	clientServer := service.NewClientServer(clientStore, *&dbClient, imageStore)
 
 	interceptor := service.NewAuthInterceptor(jwtManager, accesibleRoles())
 	grpcServer := grpc.NewServer(

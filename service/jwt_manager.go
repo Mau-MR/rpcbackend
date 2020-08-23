@@ -16,8 +16,9 @@ type JWTManager struct {
 //UserClaims is a custom JWT claims that contains some user information
 type UserClaims struct {
 	jwt.StandardClaims
-	Username string `json:"username"`
-	Role     string `json:"role"`
+	User string `json:"username"`
+	Role string `json:"role"`
+	DB   string `json:"db"`
 }
 
 func NewJWTManager(secretKey string, tokenDuration time.Duration) *JWTManager {
@@ -28,8 +29,9 @@ func (manager *JWTManager) Generate(user *User) (string, error) {
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(manager.tokenDuration).Unix(),
 		},
-		Username: user.Username,
-		Role:     user.Role,
+		User: user.User,
+		Role: user.Role,
+		DB:   user.DB,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(manager.secretKey))
@@ -43,6 +45,7 @@ func (manager *JWTManager) Verify(accesToken string) (*UserClaims, error) {
 		func(token *jwt.Token) (interface{}, error) {
 			_, ok := token.Method.(*jwt.SigningMethodHMAC)
 			if !ok {
+				//to check that signing method is no modified
 				return nil, fmt.Errorf("unexpected token signing method")
 			}
 			return []byte(manager.secretKey), nil

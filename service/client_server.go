@@ -20,10 +20,11 @@ const maxImageSize = 1 << 20
 type ClientServer struct {
 	clientStore ClientStore
 	imageStore  ImageStore
+	db          *DB
 }
 
-func NewClientServer(clientStore ClientStore, imageStore ImageStore) *ClientServer {
-	return &ClientServer{clientStore, imageStore}
+func NewClientServer(clientStore ClientStore, db *DB, imageStore ImageStore) *ClientServer {
+	return &ClientServer{clientStore, imageStore, db}
 }
 
 func (server *ClientServer) UploadImage(stream pb.ClientService_UploadImageServer) error {

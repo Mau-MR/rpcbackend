@@ -20,10 +20,10 @@ func NewInMemoryUserStore() *InMemoryUserStore {
 func (store *InMemoryUserStore) Save(user *User) error {
 	store.mutex.Lock()
 	defer store.mutex.Unlock()
-	if store.users[user.Username] != nil {
+	if store.users[user.User] != nil {
 		return ErrAlreadyExists
 	}
-	store.users[user.Username] = user.Clone()
+	store.users[user.User] = user.Clone()
 	return nil
 
 }
