@@ -13,13 +13,13 @@ of customer behavior analysis with AI
 Some features are going to be added on the future
 ## Commands
 #### `make gen`
-This is to generate all the proto files that are inside of the proto folder
+Generates all proto files that are inside of the proto folder
 #### `make clean`
-This is to delete all generated code of the pb folder, used when making changes on the proto files
+Deletes all generated code of the Pb folder, used when making changes on the proto files
 #### `make server`
-This is to turn on the server on port 8080
+Turns on the server on port 8080
 #### `make client`
-This is to connect a client to the server and make some requests (currently making changes)
+Connects a client to the server and make some requests (currently making changes)
 #### `make test`
-This is to make some test of the code.(missing some test implementations)
+Runs test for the code.(missing some test implementations)
 
