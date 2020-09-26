@@ -7,7 +7,7 @@ Solve current problems that businesses have and add value to existing projects.
 In the future add tickets by sms or some statistics of employee performance and business indicators as well
 of customer behavior analysis with AI
 ## Features
-1.-Authentication: Currently working, used JWT and GRPC interceptors to send the user data on a token.
+1. Authentication: Currently working, used JWT and GRPC interceptors to send the user data on a token.
 2. Image Streaming: Currently working, Used GRPC stream to send images over the network.
 3. User creation: Currently working, Used MongoDB and bcrypt to store user accounts.
 Some features are going to be added on the future
