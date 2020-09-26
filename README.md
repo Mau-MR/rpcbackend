@@ -1,5 +1,6 @@
 # GRPC Backend
 This project is a GRPC Golang backend, which tries to solve business administration problems, in order to be stored in the cloud.
+
 The goal is to have a template for general business and add extensions in microservices architecture for other types of bussines in the future.
 
 ## Motivation
@@ -10,6 +11,7 @@ of customer behavior analysis with AI
 1. Authentication: Used JWT and GRPC interceptors to send the user data on a token.
 2. Image Streaming: Used GRPC stream to send images over the network.
 3. User creation: Used MongoDB and bcrypt to store user accounts.
+
 Some features are going to be added on the future.
 ## Commands
 #### `make gen`
